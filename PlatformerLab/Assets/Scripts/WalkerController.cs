@@ -18,6 +18,7 @@ public class WalkerController : MonoBehaviour
 
     private InputAction jumpAction;
     private bool jumpRequested;
+    private bool jumpCutRequested;
     private bool isGrounded;
 
 
@@ -39,6 +40,10 @@ public class WalkerController : MonoBehaviour
         {
             jumpRequested = true;
         }
+        if (jumpAction.WasReleasedThisFrame())
+        {
+            jumpCutRequested = true;
+        }
     }
      void FixedUpdate()
     {
@@ -47,6 +52,13 @@ public class WalkerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpVelocity);
         }
+        if (jumpCutRequested && rb.linearVelocity.y > 0f)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+        }
+
+        jumpRequested = false;
+        jumpCutRequested = false;
 
         jumpRequested = false;
         
