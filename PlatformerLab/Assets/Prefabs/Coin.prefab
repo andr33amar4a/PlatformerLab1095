@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Coin
   points: 10
+  pickupClip: {fileID: 8300000, guid: 62f0842d26a304f2c9d4de33584233da, type: 3}
 --- !u!95 &6472137232516003497
 Animator:
   serializedVersion: 7
