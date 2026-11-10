@@ -190,6 +190,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   coyoteTime: 0.5
+  jumpClip: {fileID: 8300000, guid: 39b8b1b5495b34376ad97cb46526ae8a, type: 3}
+  landClip: {fileID: 8300000, guid: 70e320734e281464281b93617ee363f0, type: 3}
 --- !u!95 &5959219408693252147
 Animator:
   serializedVersion: 7

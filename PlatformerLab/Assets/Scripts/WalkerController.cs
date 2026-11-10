@@ -17,6 +17,10 @@ public class WalkerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float coyoteTime = 0.1f;
     private float coyoteTimer;
+    [Header("Audio")]
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip landClip;
+    private bool wasGrounded = true;
 
     private InputAction jumpAction;
     private bool jumpRequested;
@@ -75,14 +79,22 @@ public class WalkerController : MonoBehaviour
         bool wasGrounded = isGrounded;
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position, groundCheckRadius, groundLayer) != null;
+        if (isGrounded && !wasGrounded) PlaySound(landClip);   // the landing: a change, not a state
+        wasGrounded = isGrounded;
         if (isGrounded) coyoteTimer = coyoteTime;
         else            coyoteTimer -= Time.fixedDeltaTime;
         if (jumpRequested && coyoteTimer > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpVelocity);
             coyoteTimer = 0f;   // a granted jump spends the whole window
+            PlaySound(jumpClip);
         }
         //if (isGrounded != wasGrounded) Debug.Log($"isGrounded -> {isGrounded}");
+    }
+        private void PlaySound(AudioClip clip)
+    {
+        // A scene without an AudioManager stays silent instead of throwing.
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySfx(clip);
     }
      void OnDrawGizmosSelected()
     {
